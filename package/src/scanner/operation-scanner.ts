@@ -58,6 +58,8 @@ export class OperationScanner<
     this.scanPath();
     this.scanParams();
     this.scanResponses();
+    this.scanSummary();
+    this.scanDescription();
     return this.operation;
   }
 
@@ -110,6 +112,14 @@ export class OperationScanner<
     requestBody.setRequired(true);
     requestBody.setMediaType(jsonapiMediaType);
     this.operation.setRequestBody(requestBody);
+  }
+
+  private scanSummary() {
+    this.operation.setSummary(this.operationExplorer.exploreSummary())
+  }
+
+  private scanDescription() {
+    this.operation.setDescription(this.operationExplorer.exploreDescription())
   }
 
   private getRequestBodySchemaGenerator(

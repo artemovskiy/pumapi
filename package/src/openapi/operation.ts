@@ -47,6 +47,20 @@ export class Operation {
     return this;
   }
 
+  private _description: string;
+
+  setDescription(description: string) {
+    this._description = description;
+    return this;
+  }
+
+  private _summary: string;
+
+  setSummary(summary: string) {
+    this._summary = summary;
+    return this;
+  }
+
   getOpenapi(): OpenAPIV3.OperationObject {
     const result: OpenAPIV3.OperationObject = {
       parameters: this._params.map((param) => param.getOpenapi()),
@@ -54,6 +68,12 @@ export class Operation {
     };
     if (this._requestBody) {
       result.requestBody = this._requestBody.getOpenapi();
+    }
+    if(this._description) {
+      result.description = this._description;
+    }
+    if(this._summary) {
+      result.summary = this._summary;
     }
     return result;
   }

@@ -6,6 +6,8 @@ export const METADATA = {
     RELATIONSHIPS: 'jsonapi/resource/relationships',
   },
   OPERATION: {
+    DESCRIPTION: 'jsonapi/operation/description',
+    SUMMARY: 'jsonapi/operation/summary',
     RESPONSE_RESOURCE: 'jsonapi/operation/responseResource',
     INPUT_RESOURCE: 'jsonapi/operation/inputResource',
   },

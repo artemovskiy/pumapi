@@ -1,6 +1,26 @@
 import { ArrayType, Constructor, InputResourceOptions } from '../types';
 import { METADATA } from '../metadata';
 
+export function Summary(summary: string): MethodDecorator {
+  return (target, propertyKey, descriptor) => {
+    Reflect.defineMetadata(
+      METADATA.OPERATION.SUMMARY,
+      summary,
+      descriptor.value,
+    );
+  };
+}
+
+export function Description(description: string): MethodDecorator {
+  return (target, propertyKey, descriptor) => {
+    Reflect.defineMetadata(
+      METADATA.OPERATION.DESCRIPTION,
+      description,
+      descriptor.value,
+    );
+  };
+}
+
 export type ResponseResourceOptions<T> = {
   type: T extends Array<infer I> ? ArrayType<Constructor<I>> : Constructor<T>;
 };

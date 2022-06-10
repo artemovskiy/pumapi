@@ -10,4 +10,6 @@ export {
   ResponseResource,
   ResponseResourceOptions,
   InputResource,
+  Description,
+  Summary,
 } from './operation';

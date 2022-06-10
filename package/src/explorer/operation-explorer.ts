@@ -98,6 +98,20 @@ export class OperationExplorer<
     };
   }
 
+  exploreSummary() {
+    return  Reflect.getMetadata(
+      METADATA.OPERATION.SUMMARY,
+      this._class.prototype[this.methodName],
+    ) ?? null
+  }
+
+  exploreDescription() {
+    return  Reflect.getMetadata(
+      METADATA.OPERATION.DESCRIPTION,
+      this._class.prototype[this.methodName],
+    ) ?? null
+  }
+
   /* --- Responses --- */
 
   exploreResponseResource(): DocumentResponse<T> {

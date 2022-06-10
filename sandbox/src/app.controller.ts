@@ -1,8 +1,8 @@
-import {Controller, Get, Param, UseInterceptors} from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { Shop, ShopDocument } from './domain/shop.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ArrayType, JsonapiInterceptor, ResponseResource } from 'nest-json-api';
+import {ArrayType, Description, JsonapiInterceptor, ResponseResource, Summary} from 'nest-json-api';
 import { ShopResource, GoodsItemResource } from './shop.resource';
 
 @Controller()
@@ -13,6 +13,8 @@ export class AppController {
   ) {}
 
   @Get('/shops')
+  @Description('Retrieves all available shops')
+  @Summary('Retrieves all available shops')
   @ResponseResource({
     type: new ArrayType(ShopResource),
   })
