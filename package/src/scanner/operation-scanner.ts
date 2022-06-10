@@ -64,7 +64,8 @@ export class OperationScanner<
   }
 
   private scanPath() {
-    this.operation.setPath(this.operationExplorer.explorePath());
+    const jsonSchemaPath = this.operationExplorer.explorePath().replace(/\/:([a-zA-Z0-9\-_]+)/g, '/{$1}');
+    this.operation.setPath(jsonSchemaPath);
   }
 
   private scanMethod() {
