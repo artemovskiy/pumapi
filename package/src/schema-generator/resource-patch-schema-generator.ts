@@ -11,10 +11,11 @@ export class ResourcePatchSchemaGenerator<
     this.buildRequiredPropsList();
     return this.schema;
   }
+
   protected setAttributesObject() {
     const attributesDefinitions = this.explorer.getAttributesDefinitions();
     if (!attributesDefinitions) {
-      return undefined;
+      return;
     }
     const properties = R.compose(
       R.mapObjIndexed(({ type }) => this.generateAttributeSchema(type)),

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import 'reflect-metadata';
 import * as JSONAPI from 'jsonapi-typescript';
 
@@ -51,7 +52,7 @@ describe('ResourceSerializer', () => {
 
   beforeEach(() => {
     catExplorer = new MockerResourceExplorer(null) as unknown as jest.Mocked<
-      ResourceExplorer<any>
+    ResourceExplorer<any>
     >;
     catExplorer.getIdKey.mockReturnValue('id');
     catExplorer.getType.mockReturnValue('cat');
@@ -67,7 +68,7 @@ describe('ResourceSerializer', () => {
     });
 
     dogExplorer = new MockerResourceExplorer(null) as unknown as jest.Mocked<
-      ResourceExplorer<Dog>
+    ResourceExplorer<Dog>
     >;
     dogExplorer.getIdKey.mockReturnValue('identifier');
     dogExplorer.getType.mockReturnValue('dog');
@@ -98,7 +99,7 @@ describe('ResourceSerializer', () => {
     expect(result.type).toBe('dog');
   });
 
-  /*const angoraBreed = new Breed(
+  /* const angoraBreed = new Breed(
       'breed-angora',
       'Angora',
       new Region('Turkey'),
@@ -193,5 +194,5 @@ describe('ResourceSerializer', () => {
       expect(pawsRelationship.rCtor).toBe(pawsArrayType);
       expect(pawsRelationship.related).toBe(cats[0].paws);
     });
-  });*/
+  }); */
 });

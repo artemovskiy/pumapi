@@ -1,4 +1,3 @@
-import * as path from 'path';
 import { OpenAPIV3 } from 'openapi-types';
 
 import { RequestMethod } from '@nestjs/common';
@@ -33,6 +32,7 @@ export class OperationScanner<
   T extends { [K in N]: (...args: any[]) => any },
 > {
   private readonly operation: Operation;
+
   private readonly operationExplorer: OperationExplorer<N, T>;
 
   constructor(
@@ -102,10 +102,10 @@ export class OperationScanner<
       },
       required: ['data'],
     });
-    const schemaName = type.name + 'RequestBody';
+    const schemaName = `${type.name}RequestBody`;
     this.resourceSchemaDictionary.setResourceSchema(schemaName, schema, type);
     const refSchema = new RefSchema();
-    refSchema.setRef('#/components/schemas/' + schemaName);
+    refSchema.setRef(`#/components/schemas/${schemaName}`);
     const jsonapiMediaType = new MediaType();
     jsonapiMediaType.setType('application/vnd.api+json');
     jsonapiMediaType.setSchema(refSchema);
@@ -116,11 +116,11 @@ export class OperationScanner<
   }
 
   private scanSummary() {
-    this.operation.setSummary(this.operationExplorer.exploreSummary())
+    this.operation.setSummary(this.operationExplorer.exploreSummary());
   }
 
   private scanDescription() {
-    this.operation.setDescription(this.operationExplorer.exploreDescription())
+    this.operation.setDescription(this.operationExplorer.exploreDescription());
   }
 
   private getRequestBodySchemaGenerator(
@@ -156,14 +156,14 @@ export class OperationScanner<
       );
       const documentSchema = new Schema();
       documentSchema.setData(schemaGenerator.generateSchema());
-      const schemaName = definition.type.name + 'Response';
+      const schemaName = `${definition.type.name}Response`;
       this.resourceSchemaDictionary.setResourceSchema(
         schemaName,
         documentSchema,
         definition.type,
       );
       const refSchema = new RefSchema();
-      refSchema.setRef('#/components/schemas/' + schemaName);
+      refSchema.setRef(`#/components/schemas/${schemaName}`);
       const jsonapiMediaType = new MediaType();
       jsonapiMediaType.setType('application/vnd.api+json');
       jsonapiMediaType.setSchema(refSchema);

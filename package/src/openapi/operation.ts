@@ -69,10 +69,10 @@ export class Operation {
     if (this._requestBody) {
       result.requestBody = this._requestBody.getOpenapi();
     }
-    if(this._description) {
+    if (this._description) {
       result.description = this._description;
     }
-    if(this._summary) {
+    if (this._summary) {
       result.summary = this._summary;
     }
     return result;

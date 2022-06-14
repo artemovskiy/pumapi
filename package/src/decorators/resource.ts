@@ -27,8 +27,7 @@ export function Attribute(
 ): PropertyDecorator {
   const optionsSafe = options || {};
   return (target: unknown, propertyKey: string | symbol) => {
-    const attributes =
-      Reflect.getMetadata(METADATA.RESOURCE.ATTRIBUTES, target) || {};
+    const attributes = Reflect.getMetadata(METADATA.RESOURCE.ATTRIBUTES, target) || {};
     Reflect.defineMetadata(
       METADATA.RESOURCE.ATTRIBUTES,
       { ...attributes, [propertyKey]: optionsSafe },
@@ -44,8 +43,7 @@ export type RelationshipOptions = {
 export function Relationship(options?: RelationshipOptions): PropertyDecorator {
   const optionsSafe = options || {};
   return (target: unknown, propertyKey: string | symbol) => {
-    const relationships =
-      Reflect.getMetadata(METADATA.RESOURCE.RELATIONSHIPS, target) || {};
+    const relationships = Reflect.getMetadata(METADATA.RESOURCE.RELATIONSHIPS, target) || {};
     Reflect.defineMetadata(
       METADATA.RESOURCE.RELATIONSHIPS,
       { ...relationships, [propertyKey]: optionsSafe },

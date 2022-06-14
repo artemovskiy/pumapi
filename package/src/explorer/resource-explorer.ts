@@ -6,11 +6,12 @@ import { AttributeOptions, RelationshipDefinitions } from '../types';
 
 export class ResourceExplorer<T> extends IdentificationExplorer<T> {
   getAttributesDefinitions(): { [P in keyof T]?: AttributeOptions } {
-    const metadata: { [P in keyof T]?: Partial<AttributeOptions> } =
-      Reflect.getMetadata(METADATA.RESOURCE.ATTRIBUTES, this.ctor.prototype) ||
-      {};
+    const metadata: { [P in keyof T]?: Partial<AttributeOptions> } = Reflect.getMetadata(
+      METADATA.RESOURCE.ATTRIBUTES,
+      this.ctor.prototype,
+    ) || {};
     return R.mapObjIndexed((definition, key) => {
-      let type = definition.type;
+      let { type } = definition;
       if (!type) {
         type = Reflect.getMetadata('design:type', this.ctor.prototype, key);
       }
@@ -27,10 +28,10 @@ export class ResourceExplorer<T> extends IdentificationExplorer<T> {
       this.ctor.prototype,
     );
     if (
-      typeof relationshipsMeta === 'undefined' ||
-      (typeof relationshipsMeta === 'object' &&
-        (relationshipsMeta === null ||
-          Object.keys(relationshipsMeta).length === 0))
+      typeof relationshipsMeta === 'undefined'
+      || (typeof relationshipsMeta === 'object'
+        && (relationshipsMeta === null
+          || Object.keys(relationshipsMeta).length === 0))
     ) {
       return null;
     }
@@ -38,7 +39,7 @@ export class ResourceExplorer<T> extends IdentificationExplorer<T> {
       throw new TypeError();
     }
     return R.mapObjIndexed((definition, key) => {
-      let type = definition.type;
+      let { type } = definition;
       if (!type) {
         type = Reflect.getMetadata('design:type', this.ctor.prototype, key);
       }

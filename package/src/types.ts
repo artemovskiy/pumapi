@@ -16,7 +16,7 @@ export class ArrayType<T extends Constructor<any>> {
   constructor(public readonly ctor: T) {}
 
   get name() {
-    return this.ctor.name + 'Array';
+    return `${this.ctor.name}Array`;
   }
 }
 

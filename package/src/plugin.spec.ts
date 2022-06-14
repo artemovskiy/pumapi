@@ -15,6 +15,7 @@ import {
 })
 class Cat {
   id: number;
+
   @Attribute()
   nickname: string;
 }

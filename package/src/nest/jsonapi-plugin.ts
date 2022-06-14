@@ -1,8 +1,8 @@
 import * as swaggerUi from 'swagger-ui-express';
 import { INestApplication } from '@nestjs/common';
+import * as YAML from 'json-to-pretty-yaml';
 import { AppScanner } from '../scanner/app-scanner';
 // @ts-ignore
-import * as YAML from 'json-to-pretty-yaml';
 
 export class JsonapiPlugin {
   static scan(app: INestApplication) {

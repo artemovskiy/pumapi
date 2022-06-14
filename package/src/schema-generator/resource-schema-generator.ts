@@ -62,20 +62,18 @@ export class ResourceSchemaGenerator<T> {
   }
 
   private getRelationshipsObjectSchema() {
-    const relationshipsDefinitions =
-      this.explorer.getRelationshipsDefinitions();
+    const relationshipsDefinitions = this.explorer.getRelationshipsDefinitions();
     if (!relationshipsDefinitions) {
       return undefined;
     }
     return {
       type: 'object',
       properties: R.mapObjIndexed(
-        (definition, key) =>
-          this.relationshipsSchemaGenerator.generateSchema({
-            oCtor: this.explorer.ctor,
-            rCtor: definition.type,
-            key: key as keyof T,
-          }),
+        (definition, key) => this.relationshipsSchemaGenerator.generateSchema({
+          oCtor: this.explorer.ctor,
+          rCtor: definition.type,
+          key: key as keyof T,
+        }),
         relationshipsDefinitions,
       ),
     };

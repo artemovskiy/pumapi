@@ -1,6 +1,5 @@
 import * as R from 'ramda';
 import { INestApplication } from '@nestjs/common';
-import { NestContainer } from '@nestjs/core';
 import { Module } from '@nestjs/core/injector/module';
 
 import { Paths, Document } from '../openapi';
@@ -21,7 +20,9 @@ const mergePaths = (paths: Paths[]): Paths => {
 
 export class AppScanner {
   private readonly document: Document;
+
   private readonly resourceSchemaDictionary: ResourceSchemaDictionary;
+
   constructor(private readonly app: INestApplication) {
     this.document = new Document();
     this.resourceSchemaDictionary = new ResourceSchemaDictionary();
@@ -30,15 +31,13 @@ export class AppScanner {
   scan() {
     const paths = mergePaths(
       R.flatten(
-        this.getModules().map((module) => {
-          return Array.from(module.routes.values()).map((value) => {
-            const controllerScanner = new ControllerScanner(
-              value,
-              this.resourceSchemaDictionary,
-            );
-            return controllerScanner.scanner();
-          });
-        }),
+        this.getModules().map((module) => Array.from(module.routes.values()).map((value) => {
+          const controllerScanner = new ControllerScanner(
+            value,
+            this.resourceSchemaDictionary,
+          );
+          return controllerScanner.scanner();
+        })),
       ),
     );
     this.document.setPaths(paths);
@@ -49,7 +48,7 @@ export class AppScanner {
   }
 
   private getModules(): Module[] {
-    const container: NestContainer = (this.app as any).container;
+    const { container } = this.app as any;
     return Array.from(container.getModules().values());
   }
 }

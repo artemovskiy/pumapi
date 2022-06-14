@@ -16,8 +16,9 @@ export class DocumentSerializer<T> {
 
   serialize(content: T): JSONAPI.Document {
     const includedResourcesCollection = new IncludedResourcesCollection();
-    const dataRelationshipsSerializer: RelationshipSerializer =
-      new RelationshipLinkageSerializer(includedResourcesCollection);
+    const dataRelationshipsSerializer: RelationshipSerializer = new RelationshipLinkageSerializer(
+      includedResourcesCollection,
+    );
     const data = this.getData(content, dataRelationshipsSerializer);
     const includedRelationshipsSerializer = new RelationshipLinksSerializer(
       this.baseUrl,
@@ -26,12 +27,11 @@ export class DocumentSerializer<T> {
       return {
         data,
       };
-    } else {
-      const included = includedResourcesCollection.serialize(
-        includedRelationshipsSerializer,
-      );
-      return { data, included };
     }
+    const included = includedResourcesCollection.serialize(
+      includedRelationshipsSerializer,
+    );
+    return { data, included };
   }
 
   private getData(content: T, includeCollection: RelationshipSerializer) {
@@ -39,14 +39,11 @@ export class DocumentSerializer<T> {
       const resourceSerializer = new ResourceSerializer(
         new ResourceExplorer(this.ctor.ctor),
       );
-      return (content as unknown as any[]).map((item) =>
-        resourceSerializer.serialize(item, includeCollection),
-      );
-    } else {
-      const resourceSerializer = new ResourceSerializer(
-        new ResourceExplorer(this.ctor),
-      );
-      return resourceSerializer.serialize(content, includeCollection);
+      return (content as unknown as any[]).map((item) => resourceSerializer.serialize(item, includeCollection));
     }
+    const resourceSerializer = new ResourceSerializer(
+      new ResourceExplorer(this.ctor),
+    );
+    return resourceSerializer.serialize(content, includeCollection);
   }
 }

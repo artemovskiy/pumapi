@@ -1,9 +1,6 @@
-import * as R from 'ramda';
-
 import { ResourceExplorer } from '../explorer';
 import { RelationshipsSchemaGenerator } from './relationships-schema-generator.interface';
-import { AttributeOptions, CGIOption } from '../types';
-import { ResourceSchemaGenerator } from './resource-schema-generator';
+import { CGIOption } from '../types';
 import { ResourcePatchSchemaGenerator } from './resource-patch-schema-generator';
 
 export class ResourceDraftSchemaGenerator<
@@ -33,8 +30,8 @@ export class ResourceDraftSchemaGenerator<
     const required = [];
     for (const key in attributesDefinitions) {
       if (
-        attributesDefinitions.hasOwnProperty(key) &&
-        attributesDefinitions[key].input === 'required'
+        Object.prototype.hasOwnProperty.call(attributesDefinitions, key)
+        && attributesDefinitions[key].input === 'required'
       ) {
         required.push(key);
       }

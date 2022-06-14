@@ -36,24 +36,22 @@ export class DocumentSchemaGenerator<T> {
         type: 'array',
         items: resourceSchemaGenerator.buildResourceSchema(),
       };
-    } else {
-      const resourceSchemaGenerator = new ResourceSchemaGenerator<T>(
-        new ResourceExplorer<T>(this.resourceCtor),
-        new IncludeRelationshipSchemaGenerator(this.includedTypes),
-      );
-      return resourceSchemaGenerator.buildResourceSchema();
     }
+    const resourceSchemaGenerator = new ResourceSchemaGenerator<T>(
+      new ResourceExplorer<T>(this.resourceCtor),
+      new IncludeRelationshipSchemaGenerator(this.includedTypes),
+    );
+    return resourceSchemaGenerator.buildResourceSchema();
   }
 
   private generateIncludedObjectSchema() {
     const includedTypesSchemas = [];
     const relationshipSchemaGenerator = new LinksRelationshipSchemaGenerator();
     this.includedTypes.forEach((ctor) => {
-      const schemaGenerator =
-        this.includedResourcesSchemaGeneratorFactory.create(
-          new ResourceExplorer<T>(ctor),
-          relationshipSchemaGenerator,
-        );
+      const schemaGenerator = this.includedResourcesSchemaGeneratorFactory.create(
+        new ResourceExplorer<T>(ctor),
+        relationshipSchemaGenerator,
+      );
       includedTypesSchemas.push(schemaGenerator.buildResourceSchema());
     });
     return {

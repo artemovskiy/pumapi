@@ -7,7 +7,7 @@ export class ResourceSchemaDictionary {
   private _schemas: { [index: string]: Tuple } = {};
 
   setResourceSchema(schemaName: string, schema: Schema, resourceRef: any) {
-    if (!this._schemas.hasOwnProperty(schemaName)) {
+    if (!Object.prototype.hasOwnProperty.call(this._schemas, schemaName)) {
       this._schemas[schemaName] = [schema, resourceRef];
     } else {
       const tuple = this._schemas[schemaName];
@@ -20,11 +20,10 @@ export class ResourceSchemaDictionary {
   getSchemas(): Schemas {
     const schemasObj = new Schemas();
     for (const schemaName in this._schemas) {
-      if (!this._schemas.hasOwnProperty(schemaName)) {
-        continue;
+      if (Object.prototype.hasOwnProperty.call(this._schemas, schemaName)) {
+        const schemaElement = this._schemas[schemaName][0];
+        schemasObj.setSchema(schemaName, schemaElement);
       }
-      const schemaElement = this._schemas[schemaName][0];
-      schemasObj.setSchema(schemaName, schemaElement);
     }
     return schemasObj;
   }

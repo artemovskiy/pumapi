@@ -18,9 +18,9 @@ export class RelationshipLinkageSerializer implements RelationshipSerializer {
   }: ResourceRelationshipExtended<T, R>): JSONAPI.RelationshipsWithData {
     if (rCtor instanceof ArrayType) {
       if (
-        typeof related === 'undefined' ||
-        related === null ||
-        !(related as unknown as any[]).length
+        typeof related === 'undefined'
+        || related === null
+        || !(related as unknown as any[]).length
       ) {
         return {
           data: [],
@@ -33,18 +33,17 @@ export class RelationshipLinkageSerializer implements RelationshipSerializer {
           return serializer.serialize(item);
         }),
       } as JSONAPI.RelationshipsWithData;
-    } else {
-      if (typeof related === 'undefined' || related === null) {
-        return {
-          data: null,
-        };
-      }
-      this.collection.put({ object: related, ctor: rCtor });
-      const serializer = this.getRelationshipSerializer(rCtor);
-      return {
-        data: serializer.serialize(related),
-      } as JSONAPI.RelationshipsWithData;
     }
+    if (typeof related === 'undefined' || related === null) {
+      return {
+        data: null,
+      };
+    }
+    this.collection.put({ object: related, ctor: rCtor });
+    const serializer = this.getRelationshipSerializer(rCtor);
+    return {
+      data: serializer.serialize(related),
+    } as JSONAPI.RelationshipsWithData;
   }
 
   private getRelationshipSerializer<F>(

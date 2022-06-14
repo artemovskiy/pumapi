@@ -1,11 +1,13 @@
-import { PathItem } from './path-item';
 import { OpenAPIV3 } from 'openapi-types';
+import { PathItem } from './path-item';
 
 export class Paths {
   private pathItems: Map<string, PathItem> = new Map();
+
   setPathItem(pathItem: PathItem) {
     this.pathItems.set(pathItem.getPath(), pathItem);
   }
+
   getPathItem(path: string): PathItem {
     return this.pathItems.get(path);
   }

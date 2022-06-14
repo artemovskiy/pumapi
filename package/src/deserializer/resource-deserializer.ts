@@ -13,6 +13,7 @@ export class ResourceDeserializer<T> {
     protected readonly cgiOption: CGIOption,
     private readonly relationshipResolver: RelationshipResolver,
   ) {
+    // eslint-disable-next-line new-cap
     this.object = new explorer.ctor();
   }
 
@@ -26,14 +27,14 @@ export class ResourceDeserializer<T> {
 
   private validateType() {
     if (
-      typeof this.resource.type !== 'string' ||
-      this.resource.type !== this.explorer.getType()
+      typeof this.resource.type !== 'string'
+      || this.resource.type !== this.explorer.getType()
     ) {
       throw new TypeError(
-        'Invalid resource type: ' +
-          this.resource.type +
-          '. Expected: ' +
-          this.explorer.getType(),
+        `Invalid resource type: ${
+          this.resource.type
+        }. Expected: ${
+          this.explorer.getType()}`,
       );
     }
   }
@@ -41,9 +42,9 @@ export class ResourceDeserializer<T> {
   private setIdentifierIfNeed() {
     if (this.cgiOption === 'require' || this.cgiOption === 'allow') {
       if (
-        this.cgiOption === 'require' ||
-        typeof this.resource.id === 'undefined' ||
-        this.resource.id === null
+        this.cgiOption === 'require'
+        || typeof this.resource.id === 'undefined'
+        || this.resource.id === null
       ) {
         throw new Error('no id presented while required');
       }
@@ -58,7 +59,7 @@ export class ResourceDeserializer<T> {
   private setObjectAttributes() {
     const definitions = this.explorer.getAttributesDefinitions();
     for (const key in definitions) {
-      if (definitions.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(definitions, key)) {
         this.setObjectAttribute(key, definitions[key]);
       }
     }
@@ -66,6 +67,7 @@ export class ResourceDeserializer<T> {
 
   private setObjectAttribute<K extends keyof T>(
     key: K,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     definition: AttributeOptions,
   ) {
     this.object[key] = this.resource.attributes[
@@ -78,12 +80,10 @@ export class ResourceDeserializer<T> {
     if (!definitions || typeof this.resource.relationships === 'undefined') {
       return;
     }
-    const promises = Object.keys(definitions).reduce((acc, key) => {
-      return [
-        ...acc,
-        this.setObjectRelationship(key as keyof T, definitions[key]),
-      ];
-    }, []);
+    const promises = Object.keys(definitions).reduce((acc, key) => [
+      ...acc,
+      this.setObjectRelationship(key as keyof T, definitions[key]),
+    ], []);
     await Promise.all(promises);
   }
 
@@ -95,9 +95,9 @@ export class ResourceDeserializer<T> {
       key as string
     ] as JSONAPI.RelationshipsWithData;
     if (
-      typeof value !== 'object' ||
-      !('data' in value) ||
-      typeof value.data !== 'object'
+      typeof value !== 'object'
+      || !('data' in value)
+      || typeof value.data !== 'object'
     ) {
       throw new TypeError('expected relationship with data');
     }

@@ -38,19 +38,16 @@ export class ResourceSerializer<T> {
     object: T,
     relationshipSerializer: RelationshipSerializer,
   ): JSONAPI.RelationshipsObject {
-    const relationshipsDefinitions =
-      this.explorer.getRelationshipsDefinitions();
+    const relationshipsDefinitions = this.explorer.getRelationshipsDefinitions();
     if (!relationshipsDefinitions) {
       return undefined;
     }
-    return R.mapObjIndexed(({ type }, key) => {
-      return relationshipSerializer.serialize({
-        object,
-        oCtor: this.explorer.ctor,
-        key: key as keyof T,
-        rCtor: type,
-        related: object[key],
-      });
-    }, relationshipsDefinitions);
+    return R.mapObjIndexed(({ type }, key) => relationshipSerializer.serialize({
+      object,
+      oCtor: this.explorer.ctor,
+      key: key as keyof T,
+      rCtor: type,
+      related: object[key],
+    }), relationshipsDefinitions);
   }
 }

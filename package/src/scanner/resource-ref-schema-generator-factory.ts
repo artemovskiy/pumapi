@@ -6,11 +6,11 @@ import { ResourceSchemaDictionary } from './resource-schema-dictionary';
 import { ResourceRefSchemaGenerator } from '../schema-generator/resource-ref-schema-generator';
 
 export class ResourceRefSchemaGeneratorFactory
-  implements ResourceSchemaGeneratorFactory
-{
+implements ResourceSchemaGeneratorFactory {
   constructor(
     private readonly resourceSchemaDictionary: ResourceSchemaDictionary,
   ) {}
+
   create<T>(
     explorer: ResourceExplorer<T>,
     relationshipsSchemaGenerator: RelationshipsSchemaGenerator,

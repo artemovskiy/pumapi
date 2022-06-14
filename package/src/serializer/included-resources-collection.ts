@@ -44,15 +44,13 @@ export class IncludedResourcesCollection {
   }
 
   toJSON() {
-    return Array.from(this.related.values()).map((collectionWCtor) => {
-      return {
-        ...collectionWCtor,
-        collection: Array.from(collectionWCtor.collection.values()),
-      };
-    });
+    return Array.from(this.related.values()).map((collectionWCtor) => ({
+      ...collectionWCtor,
+      collection: Array.from(collectionWCtor.collection.values()),
+    }));
   }
 
   get empty() {
-    return this.related.size == 0;
+    return this.related.size === 0;
   }
 }

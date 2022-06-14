@@ -7,8 +7,7 @@ import { ResourceIdentifierSchemaGenerator } from './resource-identifier-schema-
 import { IdentificationExplorer } from '../explorer';
 
 export class IncludeRelationshipSchemaGenerator
-  implements RelationshipsSchemaGenerator
-{
+implements RelationshipsSchemaGenerator {
   constructor(private readonly relatedTypesSet: Set<Constructor<any>>) {}
 
   generateSchema<T, R extends keyof T>(
@@ -32,12 +31,11 @@ export class IncludeRelationshipSchemaGenerator
         type: 'array',
         items: identifierSchemaGenerator.generateSchema(),
       };
-    } else {
-      this.relatedTypesSet.add(ctor);
-      const identifierSchemaGenerator = new ResourceIdentifierSchemaGenerator(
-        new IdentificationExplorer<T>(ctor),
-      );
-      return identifierSchemaGenerator.generateSchema();
     }
+    this.relatedTypesSet.add(ctor);
+    const identifierSchemaGenerator = new ResourceIdentifierSchemaGenerator(
+      new IdentificationExplorer<T>(ctor),
+    );
+    return identifierSchemaGenerator.generateSchema();
   }
 }

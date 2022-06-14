@@ -6,8 +6,7 @@ import { ResourceSchemaDictionary } from '../scanner/resource-schema-dictionary'
 import { Schema } from '../openapi';
 
 export class ResourceRefSchemaGenerator<T>
-  implements ResourceSchemaGeneratorInterface
-{
+implements ResourceSchemaGeneratorInterface {
   private readonly wrappedSchemaGenerator: ResourceSchemaGenerator<T>;
 
   constructor(
@@ -30,11 +29,11 @@ export class ResourceRefSchemaGenerator<T>
       this.explorer.ctor.name,
     );
     return {
-      $ref: '#/components/schemas/' + this.schemaName,
+      $ref: `#/components/schemas/${this.schemaName}`,
     };
   }
 
   private get schemaName() {
-    return 'Included' + this.explorer.ctor.name;
+    return `Included${this.explorer.ctor.name}`;
   }
 }

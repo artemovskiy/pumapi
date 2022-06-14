@@ -38,8 +38,8 @@ export class OperationExplorer<
   explorePath(): string {
     const ownPath = Reflect.getMetadata(PATH_METADATA, this.handler) || '';
     return (
-      assertOnlyOpeningExceptTrailingSlash(this.parentPath) +
-      assertOnlyOpeningSlash(ownPath)
+      assertOnlyOpeningExceptTrailingSlash(this.parentPath)
+      + assertOnlyOpeningSlash(ownPath)
     );
   }
 
@@ -59,7 +59,7 @@ export class OperationExplorer<
     const routeArgsMetadata: ParamsMetadata = this.getRouteArgsMetadata();
     const params: ParameterDefinition[] = [];
     for (const key in routeArgsMetadata) {
-      if (routeArgsMetadata.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(routeArgsMetadata, key)) {
         const value = routeArgsMetadata[key];
         const type = paramTypes[value.index];
         params.push({
@@ -82,34 +82,33 @@ export class OperationExplorer<
 
   private getRouteArgsMetadata() {
     return (
-      Reflect.getMetadata(ROUTE_ARGS_METADATA, this._class, this.methodName) ||
-      {}
+      Reflect.getMetadata(ROUTE_ARGS_METADATA, this._class, this.methodName)
+      || {}
     );
   }
 
   exploreInputResourceOptions(): InputResourceOptions {
-    const metadata: Partial<InputResourceOptions> =
-      Reflect.getMetadata(
-        METADATA.OPERATION.INPUT_RESOURCE,
-        this._class.prototype[this.methodName],
-      ) || {};
+    const metadata: Partial<InputResourceOptions> = Reflect.getMetadata(
+      METADATA.OPERATION.INPUT_RESOURCE,
+      this._class.prototype[this.methodName],
+    ) || {};
     return {
       cgi: metadata.cgi || 'allow',
     };
   }
 
   exploreSummary() {
-    return  Reflect.getMetadata(
+    return Reflect.getMetadata(
       METADATA.OPERATION.SUMMARY,
       this._class.prototype[this.methodName],
-    ) ?? null
+    ) ?? null;
   }
 
   exploreDescription() {
-    return  Reflect.getMetadata(
+    return Reflect.getMetadata(
       METADATA.OPERATION.DESCRIPTION,
       this._class.prototype[this.methodName],
-    ) ?? null
+    ) ?? null;
   }
 
   /* --- Responses --- */

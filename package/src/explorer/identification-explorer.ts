@@ -7,8 +7,8 @@ export class IdentificationExplorer<T> {
   getIdKey(): string {
     const idKey = Reflect.getMetadata(METADATA.RESOURCE.ID_KEY, this.ctor);
     if (
-      (typeof idKey !== 'undefined' && typeof idKey !== 'string') ||
-      (typeof idKey === 'string' && !idKey.length)
+      (typeof idKey !== 'undefined' && typeof idKey !== 'string')
+      || (typeof idKey === 'string' && !idKey.length)
     ) {
       throw new TypeError();
     }
@@ -18,8 +18,8 @@ export class IdentificationExplorer<T> {
   getType(): string {
     const type = Reflect.getMetadata(METADATA.RESOURCE.TYPE, this.ctor);
     if (
-      (typeof type !== 'string' && typeof type !== 'undefined') ||
-      (typeof type === 'string' && !type.length)
+      (typeof type !== 'string' && typeof type !== 'undefined')
+      || (typeof type === 'string' && !type.length)
     ) {
       throw new TypeError();
     }

@@ -7,6 +7,7 @@ import { MetadataScanner } from '@nestjs/core';
 
 export class ControllerExplorer {
   private readonly metadataScanner = new MetadataScanner();
+
   constructor(private readonly controller: InstanceWrapper<Controller>) {}
 
   exploreMethods() {

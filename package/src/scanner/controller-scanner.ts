@@ -8,7 +8,9 @@ import { ResourceSchemaDictionary } from './resource-schema-dictionary';
 
 export class ControllerScanner {
   private readonly explorer: ControllerExplorer;
+
   private readonly paths: Paths;
+
   constructor(
     private readonly controller: InstanceWrapper<Controller>,
     private readonly resourceSchemaDictionary: ResourceSchemaDictionary,
@@ -31,9 +33,8 @@ export class ControllerScanner {
       if (!operation) {
         return;
       }
-      const pathItem =
-        this.paths.getPathItem(operation.getPath()) ||
-        new PathItem().setPath(operation.getPath());
+      const pathItem = this.paths.getPathItem(operation.getPath())
+        || new PathItem().setPath(operation.getPath());
       pathItem.addOperation(operation);
       this.paths.setPathItem(pathItem);
     });

@@ -1,8 +1,7 @@
 import { RelationshipsSchemaGenerator } from './relationships-schema-generator.interface';
 
 export class LinksRelationshipSchemaGenerator
-  implements RelationshipsSchemaGenerator
-{
+implements RelationshipsSchemaGenerator {
   generateSchema(): any {
     return {
       type: 'object',

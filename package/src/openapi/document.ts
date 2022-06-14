@@ -3,6 +3,7 @@ import { Components } from './components';
 
 export class Document {
   private paths: Paths;
+
   private _components: Components;
 
   setPaths(paths: Paths): this {
