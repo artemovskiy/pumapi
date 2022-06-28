@@ -43,8 +43,9 @@ export class ResourceDeserializer<T> {
     if (this.cgiOption === 'require' || this.cgiOption === 'allow') {
       if (
         this.cgiOption === 'require'
-        || typeof this.resource.id === 'undefined'
-        || this.resource.id === null
+        && (
+          typeof this.resource.id === 'undefined' || this.resource.id === null
+        )
       ) {
         throw new Error('no id presented while required');
       }
