@@ -1,5 +1,6 @@
 import { Schema } from '../openapi';
 import { Schemas } from '../openapi/schemas';
+import { ArrayType } from '../types';
 
 type Tuple = [Schema, any];
 
@@ -11,10 +12,20 @@ export class ResourceSchemaDictionary {
       this._schemas[schemaName] = [schema, resourceRef];
     } else {
       const tuple = this._schemas[schemaName];
-      if (tuple[1] !== resourceRef) {
+      if (!this.compareTypesRefs(tuple[1], resourceRef)) {
         throw new Error('invalid override');
       }
     }
+  }
+
+  private compareTypesRefs(a: unknown, b: unknown): boolean {
+    if (a instanceof ArrayType) {
+      if (b instanceof ArrayType) {
+        return a.ctor === b.ctor;
+      }
+      return false;
+    }
+    return a === b;
   }
 
   getSchemas(): Schemas {
