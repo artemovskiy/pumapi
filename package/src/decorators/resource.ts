@@ -37,7 +37,7 @@ export function Attribute(
 }
 
 export type RelationshipOptions = {
-  type?: Constructor<any> | ArrayType<Constructor<any>>;
+  type?: () => Constructor<any> | ArrayType<Constructor<any>>;
 };
 
 export function Relationship(options?: RelationshipOptions): PropertyDecorator {

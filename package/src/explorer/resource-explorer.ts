@@ -2,7 +2,10 @@ import * as R from 'ramda';
 
 import { IdentificationExplorer } from './index';
 import { METADATA } from '../metadata';
-import { AttributeOptions, RelationshipDefinitions } from '../types';
+import {
+  ArrayType, AttributeOptions, Constructor, RelationshipDefinitions,
+} from '../types';
+import { RelationshipOptions } from '../decorators';
 
 export class ResourceExplorer<T> extends IdentificationExplorer<T> {
   getAttributesDefinitions(): { [P in keyof T]?: AttributeOptions } {
@@ -38,12 +41,15 @@ export class ResourceExplorer<T> extends IdentificationExplorer<T> {
     if (typeof relationshipsMeta !== 'object') {
       throw new TypeError();
     }
-    return R.mapObjIndexed((definition, key) => {
-      let { type } = definition;
+    return R.mapObjIndexed((definition: RelationshipOptions, key) => {
+      const { type: typeFn } = definition;
+      const type: Constructor<any> | ArrayType<Constructor<any>> = typeFn
+        ? typeFn()
+        : Reflect.getMetadata('design:type', this.ctor.prototype, key);
       if (!type) {
-        type = Reflect.getMetadata('design:type', this.ctor.prototype, key);
+        throw new TypeError(`Unknown type of relationship: ${key} of ${this.ctor.name}`);
       }
       return { type };
-    }, relationshipsMeta as RelationshipDefinitions<T>) as RelationshipDefinitions<T>;
+    }, relationshipsMeta) as RelationshipDefinitions<T>;
   }
 }
