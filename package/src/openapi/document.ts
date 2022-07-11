@@ -1,5 +1,6 @@
-import { Paths } from './paths';
-import { Components } from './components';
+import {OpenAPIV3} from 'openapi-types';
+import {Paths} from './paths';
+import {Components} from './components';
 
 export class Document {
   private paths: Paths;
@@ -16,12 +17,11 @@ export class Document {
     return this;
   }
 
-  toJSON() {
-    const newVar = {
+  toJSON(): Pick<OpenAPIV3.Document, 'openapi' | 'paths' | 'components'> {
+    return {
       openapi: '3.0.0',
       paths: this.paths.getOpenapi(),
       components: this._components.getOpenapi(),
     };
-    return newVar;
   }
 }
