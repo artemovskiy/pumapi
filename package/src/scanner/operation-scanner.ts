@@ -127,6 +127,7 @@ export class OperationScanner<
     type: Constructor<any> | ArrayType<any>,
   ) {
     switch (this.operationExplorer.exploreMethod()) {
+      case RequestMethod.PUT:
       case RequestMethod.POST: {
         const options = this.operationExplorer.exploreInputResourceOptions();
         return new ResourceDraftSchemaGenerator(
@@ -196,6 +197,7 @@ export class OperationScanner<
   } = {
     [RequestMethod.GET]: HttpMethods.GET,
     [RequestMethod.POST]: HttpMethods.POST,
+    [RequestMethod.PUT]: HttpMethods.PUT,
     [RequestMethod.PATCH]: HttpMethods.PATCH,
     [RequestMethod.DELETE]: HttpMethods.DELETE,
   };

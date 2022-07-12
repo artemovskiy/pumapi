@@ -18,7 +18,7 @@ import { OperationExplorer, ResourceExplorer } from '../explorer';
 import { Constructor } from '../types';
 import { JSONAPI_CONFIG_TOKEN, IConfig } from './types';
 
-const WITH_BODY_METHODS = ['POST', 'PATCH'];
+const WITH_BODY_METHODS = ['POST', 'PUT', 'PATCH'];
 
 @Injectable()
 export class JsonapiInterceptor implements NestInterceptor {
@@ -43,7 +43,6 @@ export class JsonapiInterceptor implements NestInterceptor {
     const req = context.switchToHttp().getRequest<e.Request>();
     const bodyType = operationExplorer.exploreBodyType();
     if (WITH_BODY_METHODS.includes(req.method.toUpperCase()) && bodyType) {
-      console.log(req.body); // TODO Убрать?
       const { data } = req.body;
       const explorer = new ResourceExplorer(bodyType as Constructor<any>);
 
