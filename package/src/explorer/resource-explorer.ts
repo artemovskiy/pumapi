@@ -39,7 +39,7 @@ export class ResourceExplorer<T> extends IdentificationExplorer<T> {
       return null;
     }
     if (typeof relationshipsMeta !== 'object') {
-      throw new TypeError();
+      throw new TypeError(`relationship meta is not defined: ${this.ctor.name}`);
     }
     return R.mapObjIndexed((definition: RelationshipOptions, key) => {
       const { type: typeFn } = definition;

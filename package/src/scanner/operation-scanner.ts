@@ -95,10 +95,15 @@ export class OperationScanner<
 
   private setRequestBody(type: Constructor<any> | ArrayType<any>) {
     const schema = new Schema();
+    const resourceSchema = this.getRequestBodySchemaGenerator(type)
+      .buildResourceSchema();
+    const dataSchema = type instanceof ArrayType
+      ? { type: 'array', items: resourceSchema }
+      : resourceSchema;
     schema.setData({
       type: 'object',
       properties: {
-        data: this.getRequestBodySchemaGenerator(type).buildResourceSchema(),
+        data: dataSchema,
       },
       required: ['data'],
     });
@@ -126,19 +131,21 @@ export class OperationScanner<
   private getRequestBodySchemaGenerator(
     type: Constructor<any> | ArrayType<any>,
   ) {
+    const ctor: Constructor<any> = type instanceof ArrayType ? type.ctor : type;
+    const resourceExplorer = new ResourceExplorer(ctor);
     switch (this.operationExplorer.exploreMethod()) {
       case RequestMethod.PUT:
       case RequestMethod.POST: {
         const options = this.operationExplorer.exploreInputResourceOptions();
         return new ResourceDraftSchemaGenerator(
-          new ResourceExplorer(type as Constructor<any>),
+          resourceExplorer,
           new IncludeRelationshipSchemaGenerator(new Set<Constructor<any>>()),
           options.cgi,
         );
       }
       case RequestMethod.PATCH: {
         return new ResourcePatchSchemaGenerator(
-          new ResourceExplorer(type as Constructor<any>),
+          resourceExplorer,
           new IncludeRelationshipSchemaGenerator(new Set<Constructor<any>>()),
         );
       }

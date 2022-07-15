@@ -2,7 +2,14 @@ import { Constructor } from '../types';
 import { METADATA } from '../metadata';
 
 export class IdentificationExplorer<T> {
-  constructor(public readonly ctor: Constructor<T>) {}
+  constructor(public readonly ctor: Constructor<T>) {
+    if (!(typeof ctor === 'function')) {
+      throw new TypeError(`Invalid constructor type: ${typeof ctor}. Expected function`);
+    }
+    if (!(typeof ctor.prototype === 'object')) {
+      throw new TypeError('Invalid constructor: expected ctor.prototype to be an object');
+    }
+  }
 
   getIdKey(): string {
     const idKey = Reflect.getMetadata(METADATA.RESOURCE.ID_KEY, this.ctor);

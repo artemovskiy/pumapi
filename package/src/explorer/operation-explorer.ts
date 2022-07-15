@@ -54,6 +54,11 @@ export class OperationExplorer<
     return bodyParam ? bodyParam.type : null;
   }
 
+  private exploreCustomBodyType(): Constructor<any> | ArrayType<any> {
+    const inputResourceOptions = this.exploreInputResourceOptions();
+    return inputResourceOptions.type;
+  }
+
   exploreParams(): ParameterDefinition[] {
     const paramTypes: Constructor<unknown>[] = this.getParamTypes();
     const routeArgsMetadata: ParamsMetadata = this.getRouteArgsMetadata();
@@ -61,7 +66,9 @@ export class OperationExplorer<
     for (const key in routeArgsMetadata) {
       if (Object.prototype.hasOwnProperty.call(routeArgsMetadata, key)) {
         const value = routeArgsMetadata[key];
-        const type = paramTypes[value.index];
+        const type = getParamtype(key) === RouteParamtypes.BODY && this.exploreCustomBodyType()
+          ? this.exploreCustomBodyType()
+          : paramTypes[value.index];
         params.push({
           name: String(value.data),
           location: getParamtype(key) as RouteParamtypes,
@@ -93,6 +100,7 @@ export class OperationExplorer<
       this._class.prototype[this.methodName],
     ) || {};
     return {
+      ...metadata,
       cgi: metadata.cgi || 'allow',
     };
   }

@@ -29,6 +29,7 @@ export type CGIOption = 'require' | 'allow' | 'deny';
 
 export type InputResourceOptions = {
   cgi: CGIOption; // deny by default
+  type?: ArrayType<Constructor<any>> | Constructor<any>;
 };
 
 export type AttributeInputOption = 'required' | 'optional' | 'disabled';

@@ -15,7 +15,7 @@ import {
   StubRelationshipsResolver,
 } from '../deserializer';
 import { OperationExplorer, ResourceExplorer } from '../explorer';
-import { Constructor } from '../types';
+import { ArrayType, Constructor } from '../types';
 import { JSONAPI_CONFIG_TOKEN, IConfig } from './types';
 
 const WITH_BODY_METHODS = ['POST', 'PUT', 'PATCH'];
@@ -44,15 +44,31 @@ export class JsonapiInterceptor implements NestInterceptor {
     const bodyType = operationExplorer.exploreBodyType();
     if (WITH_BODY_METHODS.includes(req.method.toUpperCase()) && bodyType) {
       const { data } = req.body;
-      const explorer = new ResourceExplorer(bodyType as Constructor<any>);
+      if (bodyType instanceof ArrayType) {
+        const arrayData: Array<any> = data;
+        const explorer = new ResourceExplorer(bodyType.ctor as Constructor<any>);
 
-      const deserializer = new ResourceDeserializer(
-        data,
-        explorer,
-        operationExplorer.exploreInputResourceOptions().cgi,
-        new StubRelationshipsResolver(),
-      );
-      req.body = await deserializer.deserialize();
+        req.body = await Promise.all(arrayData.map((item) => {
+          const deserializer = new ResourceDeserializer(
+            item,
+            explorer,
+            operationExplorer.exploreInputResourceOptions().cgi,
+            new StubRelationshipsResolver(),
+          );
+
+          return deserializer.deserialize();
+        }));
+      } else {
+        const explorer = new ResourceExplorer(bodyType as Constructor<any>);
+
+        const deserializer = new ResourceDeserializer(
+          data,
+          explorer,
+          operationExplorer.exploreInputResourceOptions().cgi,
+          new StubRelationshipsResolver(),
+        );
+        req.body = await deserializer.deserialize();
+      }
     }
 
     if (!documentSerializer) {
