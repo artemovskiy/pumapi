@@ -60,6 +60,7 @@ export class OperationScanner<
     this.scanResponses();
     this.scanSummary();
     this.scanDescription();
+    this.scanTags();
     return this.operation;
   }
 
@@ -126,6 +127,10 @@ export class OperationScanner<
 
   private scanDescription() {
     this.operation.setDescription(this.operationExplorer.exploreDescription());
+  }
+
+  private scanTags() {
+    this.operation.setTags(this.operationExplorer.exploreTags());
   }
 
   private getRequestBodySchemaGenerator(

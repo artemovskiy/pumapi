@@ -1,9 +1,25 @@
-import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Shop, ShopDocument } from './domain/shop.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {ArrayType, Description, JsonapiInterceptor, ResponseResource, Summary} from 'nest-json-api';
-import { ShopResource, GoodsItemResource } from './shop.resource';
+import {
+  ArrayType,
+  Description,
+  InputResource,
+  JsonapiInterceptor,
+  ResponseResource,
+  Summary,
+} from 'nest-json-api';
+import { ShopResource } from './shop.resource';
+import { GoodsItemResource } from './goods-item.resource';
+import { Tag } from 'pumapi';
 
 @Controller()
 @UseInterceptors(JsonapiInterceptor)
@@ -13,6 +29,7 @@ export class AppController {
   ) {}
 
   @Get('/shops')
+  @Tag('shop')
   @Description('Retrieves all available shops')
   @Summary('Retrieves all available shops')
   @ResponseResource({
@@ -24,6 +41,7 @@ export class AppController {
   }
 
   @Get('/shops/:id/goods')
+  @Tag('shop')
   @ResponseResource({
     type: new ArrayType(GoodsItemResource),
   })
@@ -33,4 +51,9 @@ export class AppController {
     });
     return shop.goods;
   }
+
+  @Post('goods')
+  @Tag('goods')
+  @InputResource({ cgi: 'deny' })
+  async createGoodsItem(@Body() body: GoodsItemResource) {}
 }

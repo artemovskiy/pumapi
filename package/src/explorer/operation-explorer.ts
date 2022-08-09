@@ -97,7 +97,7 @@ export class OperationExplorer<
   exploreInputResourceOptions(): InputResourceOptions {
     const metadata: Partial<InputResourceOptions> = Reflect.getMetadata(
       METADATA.OPERATION.INPUT_RESOURCE,
-      this._class.prototype[this.methodName],
+      this.getMethodFn(),
     ) || {};
     return {
       ...metadata,
@@ -105,18 +105,29 @@ export class OperationExplorer<
     };
   }
 
-  exploreSummary() {
+  exploreSummary(): string | null {
     return Reflect.getMetadata(
       METADATA.OPERATION.SUMMARY,
-      this._class.prototype[this.methodName],
+      this.getMethodFn(),
     ) ?? null;
   }
 
-  exploreDescription() {
+  private getMethodFn() {
+    return this._class.prototype[this.methodName];
+  }
+
+  exploreDescription(): string | null {
     return Reflect.getMetadata(
       METADATA.OPERATION.DESCRIPTION,
-      this._class.prototype[this.methodName],
+      this.getMethodFn(),
     ) ?? null;
+  }
+
+  exploreTags(): string[] | undefined {
+    return Reflect.getMetadata(
+      METADATA.OPERATION.TAGS,
+      this.getMethodFn(),
+    );
   }
 
   /* --- Responses --- */
@@ -129,6 +140,6 @@ export class OperationExplorer<
   }
 
   private get handler(): T[N] {
-    return this._class.prototype[this.methodName];
+    return this.getMethodFn();
   }
 }

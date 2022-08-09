@@ -12,4 +12,5 @@ export {
   InputResource,
   Description,
   Summary,
+  Tag,
 } from './operation';

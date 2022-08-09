@@ -28,11 +28,12 @@
     "@nestjs/platform-express": "^8.0.0",
     "mongoose": "^6.2.3",
     "nest-commander": "^2.4.0",
+    "nest-json-api": "../package",
+    "openapi-types": "^12.0.0",
     "ramda": "^0.28.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0",
-    "nest-json-api": "../package"
+    "rxjs": "^7.2.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

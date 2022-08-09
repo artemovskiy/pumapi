@@ -10,5 +10,6 @@ export const METADATA = {
     SUMMARY: 'jsonapi/operation/summary',
     RESPONSE_RESOURCE: 'jsonapi/operation/responseResource',
     INPUT_RESOURCE: 'jsonapi/operation/inputResource',
+    TAGS: 'jsonapi/operation/tags',
   },
 };

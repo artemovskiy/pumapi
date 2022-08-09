@@ -61,6 +61,16 @@ export class Operation {
     return this;
   }
 
+  private _tags: string[];
+
+  setTags(value: string[]) {
+    this._tags = value;
+  }
+
+  getTags(): string[] {
+    return [...this._tags];
+  }
+
   getOpenapi(): OpenAPIV3.OperationObject {
     const result: OpenAPIV3.OperationObject = {
       parameters: this._params.map((param) => param.getOpenapi()),
@@ -74,6 +84,9 @@ export class Operation {
     }
     if (this._summary) {
       result.summary = this._summary;
+    }
+    if (this._tags && this._tags.length) {
+      result.tags = [...this._tags];
     }
     return result;
   }

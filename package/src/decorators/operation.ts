@@ -21,6 +21,18 @@ export function Description(description: string): MethodDecorator {
   };
 }
 
+export function Tag(tag: string): MethodDecorator {
+  return (target, propertyKey, descriptor) => {
+    const existentTags = Reflect.getMetadata(METADATA.OPERATION.TAGS, target) || [];
+    const newTags = [...existentTags, tag];
+    Reflect.defineMetadata(
+      METADATA.OPERATION.TAGS,
+      newTags,
+      descriptor.value,
+    );
+  };
+}
+
 export type ResponseResourceOptions<T> = {
   type: T extends Array<infer I> ? ArrayType<Constructor<I>> : Constructor<T>;
 };
