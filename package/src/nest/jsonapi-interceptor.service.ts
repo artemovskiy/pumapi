@@ -28,6 +28,9 @@ export class JsonapiInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler,
   ): Promise<Observable<any>> {
+    if (context.getType() !== 'http') {
+      return next.handle();
+    }    
     const handler = context.getHandler();
     const operationExplorer = new OperationExplorer(
       context.getClass(),
