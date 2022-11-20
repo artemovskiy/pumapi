@@ -16,6 +16,7 @@ import {
   JsonapiInterceptor,
   ResponseResource,
   Summary,
+  Response,
 } from 'nest-json-api';
 import { ShopResource } from './shop.resource';
 import { GoodsItemResource } from './goods-item.resource';
@@ -37,7 +38,7 @@ export class AppController {
   })
   async getShops() {
     const shops = await this.shopDocumentModel.find();
-    return shops;
+    return new Response([new Shop(), new Shop()], {count: 228});
   }
 
   @Get('/shops/:id/goods')

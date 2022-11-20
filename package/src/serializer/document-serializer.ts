@@ -14,7 +14,7 @@ export class DocumentSerializer<T> {
     private readonly baseUrl: string,
   ) {}
 
-  serialize(content: T): JSONAPI.Document {
+  serialize(content: T):JSONAPI.DocWithData {
     const includedResourcesCollection = new IncludedResourcesCollection();
     const dataRelationshipsSerializer: RelationshipSerializer = new RelationshipLinkageSerializer(
       includedResourcesCollection,

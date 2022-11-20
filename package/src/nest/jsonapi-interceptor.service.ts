@@ -17,6 +17,8 @@ import {
 import { OperationExplorer, ResourceExplorer } from '../explorer';
 import { ArrayType, Constructor } from '../types';
 import { JSONAPI_CONFIG_TOKEN, IConfig } from './types';
+import { ResponseSerializer } from '../response/response-serializer';
+import { Response } from '../response/response';
 
 const WITH_BODY_METHODS = ['POST', 'PUT', 'PATCH'];
 
@@ -30,7 +32,7 @@ export class JsonapiInterceptor implements NestInterceptor {
   ): Promise<Observable<any>> {
     if (context.getType() !== 'http') {
       return next.handle();
-    }    
+    }
     const handler = context.getHandler();
     const operationExplorer = new OperationExplorer(
       context.getClass(),
@@ -42,6 +44,8 @@ export class JsonapiInterceptor implements NestInterceptor {
     const documentSerializer = exploredResponse?.type
       ? new DocumentSerializer(exploredResponse.type, this.config.baseUrl)
       : null;
+
+    const responseSerializer = new ResponseSerializer(documentSerializer);
 
     const req = context.switchToHttp().getRequest<e.Request>();
     const bodyType = operationExplorer.exploreBodyType();
@@ -79,6 +83,10 @@ export class JsonapiInterceptor implements NestInterceptor {
     }
     return next
       .handle()
-      .pipe(map((resource) => documentSerializer.serialize(resource)));
+      .pipe(map((resource) => {
+        const response = resource instanceof Response ? resource : new Response<{}, undefined>(resource, undefined);
+        console.log(response)
+        return responseSerializer.serialize(response);
+      }));
   }
 }
