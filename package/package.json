@@ -31,7 +31,8 @@
     "ramda": "^0.28.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.4",
-    "swagger-ui-express": "^4.3.0"
+    "swagger-ui-express": "^4.3.0",
+    "typereader": "^0.0.3"
   },
   "files": [
     "dist"

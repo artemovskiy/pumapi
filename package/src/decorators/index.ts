@@ -13,4 +13,5 @@ export {
   Description,
   Summary,
   Tag,
+  ResponseMetadata,
 } from './operation';

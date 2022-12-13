@@ -17,10 +17,16 @@ import {
   ResponseResource,
   Summary,
   Response,
-} from 'nest-json-api';
+} from 'pumapi';
 import { ShopResource } from './shop.resource';
 import { GoodsItemResource } from './goods-item.resource';
-import { Tag } from 'pumapi';
+import { ResponseMetadata, Tag } from 'pumapi';
+import { Property } from 'typereader';
+
+class ShopsMeta {
+  @Property()
+  count: number;
+}
 
 @Controller()
 @UseInterceptors(JsonapiInterceptor)
@@ -36,9 +42,10 @@ export class AppController {
   @ResponseResource({
     type: new ArrayType(ShopResource),
   })
+  @ResponseMetadata(ShopsMeta)
   async getShops() {
     const shops = await this.shopDocumentModel.find();
-    return new Response([new Shop(), new Shop()], {count: 228});
+    return new Response([new Shop(), new Shop()], { count: 228 });
   }
 
   @Get('/shops/:id/goods')

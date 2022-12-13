@@ -9,6 +9,7 @@ export const METADATA = {
     DESCRIPTION: 'jsonapi/operation/description',
     SUMMARY: 'jsonapi/operation/summary',
     RESPONSE_RESOURCE: 'jsonapi/operation/responseResource',
+    RESPONSE_MEATADATA: 'jsonapi/operation/responseMetadata',
     INPUT_RESOURCE: 'jsonapi/operation/inputResource',
     TAGS: 'jsonapi/operation/tags',
   },

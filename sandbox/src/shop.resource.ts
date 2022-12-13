@@ -1,4 +1,4 @@
-import { ArrayType, Attribute, Relationship, Resource } from 'nest-json-api';
+import { ArrayType, Attribute, Relationship, Resource } from 'pumapi';
 import { GoodsItemResource } from './goods-item.resource';
 
 @Resource({

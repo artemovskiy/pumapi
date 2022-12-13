@@ -130,11 +130,16 @@ export class OperationExplorer<
     );
   }
 
-  /* --- Responses --- */
-
   exploreResponseResource(): DocumentResponse<T> {
     return Reflect.getMetadata(
       METADATA.OPERATION.RESPONSE_RESOURCE,
+      this.handler,
+    );
+  }
+
+  exploreResponseMetadata(): Constructor<unknown> {
+    return Reflect.getMetadata(
+      METADATA.OPERATION.RESPONSE_MEATADATA,
       this.handler,
     );
   }

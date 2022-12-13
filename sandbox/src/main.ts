@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { JsonapiPlugin } from 'nest-json-api';
+import { JsonapiPlugin } from 'pumapi';
 import { OpenAPIV3 } from 'openapi-types';
 
 async function bootstrap() {

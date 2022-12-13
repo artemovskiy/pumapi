@@ -60,3 +60,13 @@ export function InputResource(
     );
   };
 }
+
+export function ResponseMetadata(metaCtor: Constructor<unknown>): MethodDecorator {
+  return (target, propertyKey, descriptor) => {
+    Reflect.defineMetadata(
+      METADATA.OPERATION.RESPONSE_MEATADATA,
+      metaCtor,
+      descriptor.value,
+    );
+  };
+}

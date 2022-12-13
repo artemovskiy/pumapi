@@ -4418,28 +4418,6 @@ nest-commander@^2.4.0:
     cosmiconfig "7.0.1"
     inquirer "8.2.0"
 
-nest-json-api@../package:
-  version "0.4.0"
-  dependencies:
-    "@nestjs/common" "^8.3.1"
-    "@nestjs/core" "^8.3.1"
-    "@types/jest" "^27.4.1"
-    "@typescript-eslint/eslint-plugin" "^5.16.0"
-    "@typescript-eslint/parser" "^5.16.0"
-    eslint "^7.11.0"
-    eslint-config-airbnb-base "^15.0.0"
-    eslint-config-airbnb-typescript "^16.1.4"
-    eslint-plugin-import "^2.25.4"
-    express "^4.17.3"
-    jest "^27.5.1"
-    json-to-pretty-yaml "^1.2.2"
-    jsonapi-typescript "^0.1.3"
-    openapi-types "^12.0.0"
-    ramda "^0.28.0"
-    reflect-metadata "^0.1.13"
-    rxjs "^7.5.4"
-    swagger-ui-express "^4.3.0"
-
 node-emoji@1.11.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/node-emoji/-/node-emoji-1.11.0.tgz#69a0150e6946e2f115e9d7ea4df7971e2628301c"
@@ -4817,6 +4795,29 @@ psl@^1.1.33:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/psl/-/psl-1.8.0.tgz#9326f8bcfb013adcc005fdff056acce020e51c24"
   integrity sha512-RIdOzyoavK+hA18OGGWDqUTsCLhtA7IcZ/6NCs4fFJaHBDab+pDDmDIByWFRQJq2Cd7r1OoQxBGKOaztq+hjIQ==
+
+pumapi@../package:
+  version "0.4.3"
+  dependencies:
+    "@nestjs/common" "^8.3.1"
+    "@nestjs/core" "^8.3.1"
+    "@types/jest" "^27.4.1"
+    "@typescript-eslint/eslint-plugin" "^5.16.0"
+    "@typescript-eslint/parser" "^5.16.0"
+    eslint "^7.11.0"
+    eslint-config-airbnb-base "^15.0.0"
+    eslint-config-airbnb-typescript "^16.1.4"
+    eslint-plugin-import "^2.25.4"
+    express "^4.17.3"
+    jest "^27.5.1"
+    json-to-pretty-yaml "^1.2.2"
+    jsonapi-typescript "^0.1.3"
+    openapi-types "^12.0.0"
+    ramda "^0.28.0"
+    reflect-metadata "^0.1.13"
+    rxjs "^7.5.4"
+    swagger-ui-express "^4.3.0"
+    typereader "^0.0.3"
 
 pump@^3.0.0:
   version "3.0.0"
@@ -5747,6 +5748,13 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typereader@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/typereader/-/typereader-0.0.3.tgz#dd2f1f545379ae9e4fb27e309419648c1820fe88"
+  integrity sha512-b+g/eVRiEQxl/fXtRG/PX+9/h8mIyU6Ab5oQnv3b4du0viyH0tWmvvTik5JcvKJbVa4F6e4fa42GQxeKiVOOBQ==
+  dependencies:
+    reflect-metadata "^0.1.13"
 
 typescript@4.5.5, typescript@^4.3.5:
   version "4.5.5"

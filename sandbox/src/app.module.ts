@@ -5,7 +5,7 @@ import { BasicCommand } from './cli-module/basic-comand';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Shop, ShopSchema } from './domain/shop.schema';
 import { SeedShopsCommand } from './cli-module/seed-shops';
-import { JsonapiModule } from 'nest-json-api';
+import { JsonapiModule } from 'pumapi';
 
 @Module({
   imports: [

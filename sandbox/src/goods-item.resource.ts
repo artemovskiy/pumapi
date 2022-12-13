@@ -1,4 +1,4 @@
-import { Attribute, Relationship, Resource } from 'nest-json-api';
+import { Attribute, Relationship, Resource } from 'pumapi';
 import { ShopResource } from './shop.resource';
 
 @Resource({

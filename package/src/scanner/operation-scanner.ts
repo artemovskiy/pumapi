@@ -24,6 +24,7 @@ import HttpMethods = OpenAPIV3.HttpMethods;
 import { ResourceSchemaDictionary } from './resource-schema-dictionary';
 import { RefSchema } from '../openapi/ref-schema';
 import { ResourceRefSchemaGeneratorFactory } from './resource-ref-schema-generator-factory';
+import { MetadataSchemaGenerator } from '../schema-generator/metadata-schema-generator';
 
 const PARAM_TOKEN_PLACEHOLDER = 'placeholder';
 
@@ -168,7 +169,9 @@ export class OperationScanner<
         new ResourceRefSchemaGeneratorFactory(this.resourceSchemaDictionary),
       );
       const documentSchema = new Schema();
-      documentSchema.setData(schemaGenerator.generateSchema());
+      const responseObjectSchema = schemaGenerator.generateSchema();
+      this.addMetaIfSet(responseObjectSchema);
+      documentSchema.setData(responseObjectSchema);
       const schemaName = `${definition.type.name}Response`;
       this.resourceSchemaDictionary.setResourceSchema(
         schemaName,
@@ -186,6 +189,16 @@ export class OperationScanner<
       responses.setResponse(documentResponse);
     }
     this.operation.setResponses(responses);
+  }
+
+  private addMetaIfSet(schema: any) {
+    const metaCtor = this.operationExplorer.exploreResponseMetadata();
+    if (!metaCtor) {
+      return;
+    }
+    const metaSchema = (new MetadataSchemaGenerator(metaCtor)).build();
+    // eslint-disable-next-line no-param-reassign
+    schema.properties.meta = metaSchema;
   }
 
   private static mapParamLocation(paramType: RouteParamtypes): string {
