@@ -23,13 +23,13 @@ implements ResourceSchemaGeneratorInterface {
   buildResourceSchema(): any {
     const realSchema = new Schema();
     realSchema.setData(this.wrappedSchemaGenerator.buildResourceSchema());
-    this.dict.setResourceSchema(
+    const schemaId = this.dict.setResourceSchema(
       this.schemaName,
       realSchema,
       this.explorer.ctor.name,
     );
     return {
-      $ref: `#/components/schemas/${this.schemaName}`,
+      $ref: `#/components/schemas/${schemaId}`,
     };
   }
 
