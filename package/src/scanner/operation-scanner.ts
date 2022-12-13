@@ -110,9 +110,9 @@ export class OperationScanner<
       required: ['data'],
     });
     const schemaName = `${type.name}RequestBody`;
-    this.resourceSchemaDictionary.setResourceSchema(schemaName, schema, type);
+    const schemaId = this.resourceSchemaDictionary.setResourceSchema(schemaName, schema, type);
     const refSchema = new RefSchema();
-    refSchema.setRef(`#/components/schemas/${schemaName}`);
+    refSchema.setRef(`#/components/schemas/${schemaId}`);
     const jsonapiMediaType = new MediaType();
     jsonapiMediaType.setType('application/vnd.api+json');
     jsonapiMediaType.setSchema(refSchema);
@@ -173,13 +173,13 @@ export class OperationScanner<
       this.addMetaIfSet(responseObjectSchema);
       documentSchema.setData(responseObjectSchema);
       const schemaName = `${definition.type.name}Response`;
-      this.resourceSchemaDictionary.setResourceSchema(
+      const schemaId = this.resourceSchemaDictionary.setResourceSchema(
         schemaName,
         documentSchema,
         definition.type,
       );
       const refSchema = new RefSchema();
-      refSchema.setRef(`#/components/schemas/${schemaName}`);
+      refSchema.setRef(`#/components/schemas/${schemaId}`);
       const jsonapiMediaType = new MediaType();
       jsonapiMediaType.setType('application/vnd.api+json');
       jsonapiMediaType.setSchema(refSchema);

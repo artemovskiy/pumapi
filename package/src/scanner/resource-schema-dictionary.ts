@@ -2,38 +2,35 @@ import { Schema } from '../openapi';
 import { Schemas } from '../openapi/schemas';
 import { ArrayType } from '../types';
 
-type Tuple = [Schema, any];
-
 export class ResourceSchemaDictionary {
-  private _schemas: { [index: string]: Tuple } = {};
+  private _schemas: { [index: string]: { [index:number]: Schema } } = {};
 
-  setResourceSchema(schemaName: string, schema: Schema, resourceRef: any) {
-    if (!Object.prototype.hasOwnProperty.call(this._schemas, schemaName)) {
-      this._schemas[schemaName] = [schema, resourceRef];
-    } else {
-      const tuple = this._schemas[schemaName];
-      if (!this.compareTypesRefs(tuple[1], resourceRef)) {
-        throw new Error('invalid override');
-      }
-    }
+  setResourceSchema(schemaName: string, schema: Schema, resourceRef: any): string {
+    const variants = this.getSchemasByName(schemaName);
+    const nextNumber = Object.keys(variants).length;
+    const nextId = schemaName + nextNumber;
+    variants[nextNumber] = schema;
+    return nextId;
   }
 
-  private compareTypesRefs(a: unknown, b: unknown): boolean {
-    if (a instanceof ArrayType) {
-      if (b instanceof ArrayType) {
-        return a.ctor === b.ctor;
-      }
-      return false;
+  private getSchemasByName(name: string): { [index:number]: Schema } {
+    if (!Object.prototype.hasOwnProperty.call(this._schemas, name)) {
+      this._schemas[name] = {};
     }
-    return a === b;
+    return this._schemas[name];
   }
 
   getSchemas(): Schemas {
     const schemasObj = new Schemas();
     for (const schemaName in this._schemas) {
       if (Object.prototype.hasOwnProperty.call(this._schemas, schemaName)) {
-        const schemaElement = this._schemas[schemaName][0];
-        schemasObj.setSchema(schemaName, schemaElement);
+        const variants = this._schemas[schemaName];
+        for (const varinatNumber in variants) {
+          if (Object.prototype.hasOwnProperty.call(variants, varinatNumber)) {
+            const variant = variants[varinatNumber];
+            schemasObj.setSchema(schemaName + varinatNumber, variant);
+          }
+        }
       }
     }
     return schemasObj;
