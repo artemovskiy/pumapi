@@ -1,6 +1,6 @@
 {
   "name": "pumapi",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "license": "MIT",
   "homepage": "https://github.com/xydens/pumapi",
   "devDependencies": {
