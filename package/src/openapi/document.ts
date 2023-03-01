@@ -1,6 +1,6 @@
-import {OpenAPIV3} from 'openapi-types';
-import {Paths} from './paths';
-import {Components} from './components';
+import { OpenAPIV3 } from 'openapi-types';
+import { Paths } from './paths';
+import { Components } from './components';
 
 export class Document {
   private paths: Paths;

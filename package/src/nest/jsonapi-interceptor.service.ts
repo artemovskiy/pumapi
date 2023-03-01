@@ -85,7 +85,6 @@ export class JsonapiInterceptor implements NestInterceptor {
       .handle()
       .pipe(map((resource) => {
         const response = resource instanceof Response ? resource : new Response<{}, undefined>(resource, undefined);
-        console.log(response)
         return responseSerializer.serialize(response);
       }));
   }
